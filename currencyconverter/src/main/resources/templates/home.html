@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta id="_csrf" th:content="${_csrf.token}"/>
+    <meta id="_csrf_header" th:content="${_csrf.headerName}"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script rel="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:replace="fragments/top_navbar :: navbar">
+</div>
+<div id = "for_input" class="alert alert-danger" role="alert" style="visibility: hidden">
+    Space for input
+</div>
+<div class="d-flex p-2 justify-content-center mt-5">
+    <div class="signup-form">
+            <p class="h3 mb-4">Converter</p>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col">
+                        <select id="valute_from" class="form-control">
+                            <option th:each="valute : ${T(ru.smsoft.currencyconverter.constants.Valutes).values()}"
+                                    th:value="${valute.currencyId}"
+                                    th:text="${valute.currencyCharCode}"></option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <select id="valute_to" class="form-control">
+                            <option th:each="valute : ${T(ru.smsoft.currencyconverter.constants.Valutes).values()}"
+                                    th:value="${valute.currencyId}"
+                                    th:text="${valute.currencyCharCode}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col"><input id="value_from" type="text" class="form-control" required="required"></div>
+                    <div class="col"><input id="value_to" type="text" class="form-control bg-white" required="required" readonly disabled></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <button id="btn_convert" class="btn btn-info btn-block my-4 btn btn-dark">Convert</button>
+            </div>
+    </div>
+</div>
+<script src="js/convert.js"></script>
+<script src="js/restrict_input.js"></script>
+</body>
+</html>

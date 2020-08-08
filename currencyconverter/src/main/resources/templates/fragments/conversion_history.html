@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script rel="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:fragment="conv_history" class="ml-1 mt-2">
+    <form>
+        <div class="form-group" style="width:12%">
+            <label for="inputDate">Введите дату:</label>
+            <input type="date" class="form-control" id="inputDate">
+        </div>
+    </form>
+    <p class="lead" >Conversion history</p>
+    <div class="d-flex p-2 justify-content-center w-75 p-3">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th sec:authorize="hasRole('ROLE_ADMIN')" scope="col">User login</th>
+                <th scope="col">From</th>
+                <th scope="col">To</th>
+                <th scope="col">Initial amount</th>
+                <th scope="col">Final amount</th>
+                <th scope="col">Date</th>
+            </tr>
+            </thead>
+            <tbody id ="table_body">
+            <tr th:each="record : ${records}">
+                <td sec:authorize="hasRole('ROLE_ADMIN')" th:if="${record.user != null}" th:text="${record.user.userLogin}"></td>
+                <td  th:text="${record.currencyCharCodeFrom}"></td>
+                <td th:text="${record.currencyCharCodeTo}"></td>
+                <td th:text="${record.amountOfMoneyFrom}"></td>
+                <td th:text="${record.amountOfMoneyTo}"></td>
+                <td th:text="${#temporals.format(record.dateOfConversion, 'dd-MM-yyyy')}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

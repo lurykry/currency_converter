@@ -1,0 +1,39 @@
+<!DOCTYPE>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script rel="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="alert alert-danger" th:if="${message != null}" th:text="${message}"></div>
+<div class="d-flex p-2 justify-content-center">
+    <div class="signup-form">
+        <form class="text-center border border-light p-5" method="post" th:object="${user}" th:action="@{/registration}">
+            <p class="h3 mb-4">Register</p>
+            <p class="hint-text">Create your account. It's free and only takes a minute.</p>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col"><input th:field="*{userEmail}" type="email" class="form-control" name="email" placeholder="Email" required="required"></div>
+                    <div class="col"><input th:field="*{userLogin}" type="text" class="form-control" name="login" placeholder="Login" required="required"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input th:field="*{userPassword}" type="password" class="form-control" name="password" placeholder="Password" required="required">
+                <p th:each="error: ${#fields.errors('userPassword')}"
+                   th:text="${error}">Validation error</p>
+            </div>
+            <div class="form-group">
+                <input th:field="*{matchingPassword}" type="password" class="form-control" name="confirm_password" placeholder="Confirm Password" required="required">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-info btn-block my-4 btn btn-dark">Register Now</button>
+            </div>
+            <div class="text-center">Already have an account? <a class="text-danger" href="@{/login}">Sign in</a></div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
