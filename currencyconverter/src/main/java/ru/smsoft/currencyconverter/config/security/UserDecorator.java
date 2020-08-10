@@ -1,13 +1,11 @@
-package ru.smsoft.currencyconverter.security;
+package ru.smsoft.currencyconverter.config.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.smsoft.currencyconverter.model.User;
 
-
 import java.util.Collection;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class UserDecorator implements UserDetails {
@@ -24,11 +22,10 @@ public class UserDecorator implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Set<GrantedAuthority> authorities = user.getRoles()
+        return user.getRoles()
                 .stream()
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
                 .collect(Collectors.toSet());
-        return authorities;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package ru.smsoft.currencyconverter.serializer;
+package ru.smsoft.currencyconverter.util;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;

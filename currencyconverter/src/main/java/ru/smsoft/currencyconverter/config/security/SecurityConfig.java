@@ -1,4 +1,4 @@
-package ru.smsoft.currencyconverter.security;
+package ru.smsoft.currencyconverter.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,8 +18,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
 
-import static ru.smsoft.currencyconverter.security.Roles.ADMIN;
-import static ru.smsoft.currencyconverter.security.Roles.USER;
+import static ru.smsoft.currencyconverter.config.security.Roles.ADMIN;
+import static ru.smsoft.currencyconverter.config.security.Roles.USER;
 
 @Configuration
 @EnableWebSecurity

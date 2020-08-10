@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ru.smsoft.currencyconverter.model.ConversionHistory;
 import ru.smsoft.currencyconverter.model.User;
-import ru.smsoft.currencyconverter.security.UserDecorator;
+import ru.smsoft.currencyconverter.config.security.UserDecorator;
 import ru.smsoft.currencyconverter.service.convhistory.ConversionHistoryService;
 
 import java.util.List;
@@ -20,7 +20,12 @@ import java.util.stream.Collectors;
 @RequestMapping(path = "/user")
 public class UserController {
 
-    private ConversionHistoryService conversionHistoryService;
+    private final ConversionHistoryService conversionHistoryService;
+
+    @Autowired
+    public UserController(ConversionHistoryService conversionHistoryService) {
+        this.conversionHistoryService = conversionHistoryService;
+    }
 
     @GetMapping
     public String showUserPage(Model model){
@@ -38,15 +43,12 @@ public class UserController {
                                                             String date){
         UserDecorator userDecorator = (UserDecorator) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userDecorator.getUser();
-        List<ConversionHistory> records =  user.getConversionHistory()
+        List<ConversionHistory> records = conversionHistoryService.findConversionHistoryByUser(user);
+
+        return   records
                 .stream()
                 .filter(record -> record.getDateOfConversion().toString().equals(date))
                 .collect(Collectors.toList());
-        return records;
     }
 
-    @Autowired
-    public void setConversionHistoryService(ConversionHistoryService conversionHistoryService) {
-        this.conversionHistoryService = conversionHistoryService;
-    }
 }

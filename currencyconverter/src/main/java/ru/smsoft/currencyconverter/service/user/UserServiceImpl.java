@@ -5,23 +5,20 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.smsoft.currencyconverter.dao.UserRepository;
+import ru.smsoft.currencyconverter.dal.UserRepository;
 import ru.smsoft.currencyconverter.dto.UserDto;
 import ru.smsoft.currencyconverter.exception.AccountAlreadyExistException;
 import ru.smsoft.currencyconverter.exception.PasswordShouldBeBetweenSizAndThirtyTwoCharactersException;
 import ru.smsoft.currencyconverter.exception.PasswordsDoNotMatchException;
 import ru.smsoft.currencyconverter.model.User;
-import ru.smsoft.currencyconverter.security.Roles;
+import ru.smsoft.currencyconverter.config.security.Roles;
 
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
 
-    private UserRepository userRepository;
-    private PasswordEncoder encoder;
-
-    public UserServiceImpl() {
-    }
+    private final UserRepository userRepository;
+    private final  PasswordEncoder encoder;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, PasswordEncoder encoder) {

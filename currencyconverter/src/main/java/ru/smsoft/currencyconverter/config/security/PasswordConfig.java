@@ -1,4 +1,4 @@
-package ru.smsoft.currencyconverter.security;
+package ru.smsoft.currencyconverter.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

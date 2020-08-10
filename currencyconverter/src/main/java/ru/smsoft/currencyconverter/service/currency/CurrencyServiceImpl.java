@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.smsoft.currencyconverter.dao.CurrencyRepository;
+import ru.smsoft.currencyconverter.dal.CurrencyRepository;
 import ru.smsoft.currencyconverter.exception.CurrencyNotFoundException;
 import ru.smsoft.currencyconverter.exception.FailedToGetCurrencyXmlException;
 import ru.smsoft.currencyconverter.exception.FailedToParseCurrencyXmlException;
@@ -18,11 +18,8 @@ import ru.smsoft.currencyconverter.xmlparser.CurrencyXmlParser;
 public class CurrencyServiceImpl implements CurrencyService{
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CurrencyService.class);
-    private CurrencyRepository currencyRepository;
-    private CurrencyXmlParser parser;
-
-    public CurrencyServiceImpl() {
-    }
+    private final CurrencyRepository currencyRepository;
+    private final CurrencyXmlParser parser;
 
     @Autowired
     public CurrencyServiceImpl(CurrencyRepository currencyRepository, CurrencyXmlParser parser) {

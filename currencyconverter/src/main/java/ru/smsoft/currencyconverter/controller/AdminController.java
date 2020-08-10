@@ -16,7 +16,12 @@ import java.util.List;
 @RequestMapping(path = "/admin")
 public class AdminController {
 
-    private ConversionHistoryService conversionHistoryService;
+    private final ConversionHistoryService conversionHistoryService;
+
+    @Autowired
+    public AdminController(ConversionHistoryService conversionHistoryService) {
+        this.conversionHistoryService = conversionHistoryService;
+    }
 
     @GetMapping
     public String showAdminPage(Model model){
@@ -30,13 +35,6 @@ public class AdminController {
     public List<ConversionHistory> findRecordByDate(@RequestParam("date")
                                        String date){
 
-        List<ConversionHistory> records = conversionHistoryService.findRecordsByDate(date);
-
-        return records;
-    }
-
-    @Autowired
-    public void setConversionHistoryService(ConversionHistoryService conversionHistoryService) {
-        this.conversionHistoryService = conversionHistoryService;
+        return conversionHistoryService.findRecordsByDate(date);
     }
 }

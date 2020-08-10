@@ -19,7 +19,12 @@ public class Initializer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MainController.class);
 
-    private  CurrencyService service;
+    private final CurrencyService service;
+
+    @Autowired
+    public Initializer(CurrencyService service) {
+        this.service = service;
+    }
 
     @EventListener(ApplicationReadyEvent.class)
     public void initialize(){
@@ -32,10 +37,5 @@ public class Initializer {
             LOGGER.error("initializer: initialize(): ",e);
             throw new RuntimeException("failed to initialize");
         }
-    }
-
-    @Autowired
-    public void setService(CurrencyService service) {
-        this.service = service;
     }
 }

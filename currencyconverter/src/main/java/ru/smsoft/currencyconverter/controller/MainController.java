@@ -26,9 +26,14 @@ public class MainController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MainController.class);
 
-    private UserService userService;
-    private EmailSenderService emailSenderService;
+    private final UserService userService;
+    private final EmailSenderService emailSenderService;
 
+    @Autowired
+    public MainController(UserService userService, EmailSenderService emailSenderService) {
+        this.userService = userService;
+        this.emailSenderService = emailSenderService;
+    }
 
     @GetMapping(path = {"home", ""})
     public String showHomePage(){
@@ -78,15 +83,5 @@ public class MainController {
         //Тут должен быть небольшой участок кода с отправкой письма об успешной регистрации пользователю
 
         return "redirect:/home";
-    }
-
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
-    @Autowired
-    public void setEmailSenderService(EmailSenderService emailSenderService) {
-        this.emailSenderService = emailSenderService;
     }
 }

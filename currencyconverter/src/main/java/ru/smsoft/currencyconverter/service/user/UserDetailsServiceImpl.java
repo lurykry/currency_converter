@@ -5,23 +5,20 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ru.smsoft.currencyconverter.dao.ConversionHistoryRepository;
-import ru.smsoft.currencyconverter.dao.UserRepository;
+import ru.smsoft.currencyconverter.dal.ConversionHistoryRepository;
+import ru.smsoft.currencyconverter.dal.UserRepository;
 import ru.smsoft.currencyconverter.model.ConversionHistory;
 import ru.smsoft.currencyconverter.model.User;
-import ru.smsoft.currencyconverter.security.UserDecorator;
-import ru.smsoft.currencyconverter.security.Roles;
+import ru.smsoft.currencyconverter.config.security.UserDecorator;
+import ru.smsoft.currencyconverter.config.security.Roles;
 
 import java.util.List;
 
 @Service("userDetailsServiceImpl")
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private UserRepository userRepository;
-    private ConversionHistoryRepository conversionHistoryRepository;
-
-    public UserDetailsServiceImpl() {
-    }
+    private final UserRepository userRepository;
+    private final ConversionHistoryRepository conversionHistoryRepository;
 
     @Autowired
     public UserDetailsServiceImpl(UserRepository userRepository, ConversionHistoryRepository conversionHistoryRepository) {

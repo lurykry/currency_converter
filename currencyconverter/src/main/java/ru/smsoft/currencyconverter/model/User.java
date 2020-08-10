@@ -1,6 +1,6 @@
 package ru.smsoft.currencyconverter.model;
 
-import ru.smsoft.currencyconverter.security.Roles;
+import ru.smsoft.currencyconverter.config.security.Roles;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

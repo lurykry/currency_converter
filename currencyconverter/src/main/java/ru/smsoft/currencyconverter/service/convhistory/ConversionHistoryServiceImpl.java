@@ -3,7 +3,7 @@ package ru.smsoft.currencyconverter.service.convhistory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.smsoft.currencyconverter.dao.ConversionHistoryRepository;
+import ru.smsoft.currencyconverter.dal.ConversionHistoryRepository;
 import ru.smsoft.currencyconverter.model.ConversionHistory;
 import ru.smsoft.currencyconverter.model.User;
 
@@ -14,10 +14,7 @@ import java.util.List;
 @Transactional
 public class ConversionHistoryServiceImpl implements ConversionHistoryService{
 
-    private ConversionHistoryRepository conversionHistoryRepository;
-
-    public ConversionHistoryServiceImpl() {
-    }
+    private final ConversionHistoryRepository conversionHistoryRepository;
 
     @Autowired
     public ConversionHistoryServiceImpl(ConversionHistoryRepository conversionHistoryRepository) {

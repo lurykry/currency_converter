@@ -14,7 +14,7 @@ import ru.smsoft.currencyconverter.exception.FailedToUpdateCurrencyException;
 import ru.smsoft.currencyconverter.model.ConversionHistory;
 import ru.smsoft.currencyconverter.model.Currency;
 import ru.smsoft.currencyconverter.model.User;
-import ru.smsoft.currencyconverter.security.UserDecorator;
+import ru.smsoft.currencyconverter.config.security.UserDecorator;
 import ru.smsoft.currencyconverter.service.convhistory.ConversionHistoryService;
 import ru.smsoft.currencyconverter.service.currency.CurrencyService;
 import ru.smsoft.currencyconverter.util.Rounder;
@@ -34,16 +34,20 @@ public class ConverterController {
             "last date of update is: ";
     private static final Long EXTRA_DAY = 1L;
 
-    private CurrencyService currencyService;
-    private ConversionHistoryService conversionHistoryService;
+    private final CurrencyService currencyService;
+    private final ConversionHistoryService conversionHistoryService;
 
-
+    @Autowired
+    public ConverterController(CurrencyService currencyService, ConversionHistoryService conversionHistoryService) {
+        this.currencyService = currencyService;
+        this.conversionHistoryService = conversionHistoryService;
+    }
 
     @PostMapping (consumes = "application/json", produces = "application/json")
     public ServerResponse convert(@RequestBody ConverterDto converterDto){
 
-        boolean isCurrencyFromUpdateSucceeded = true;
-        boolean isCurrencyToUpdateSucceeded = true;
+        boolean isCurrencyFromUpdateSucceeded;
+        boolean isCurrencyToUpdateSucceeded;
         UserDecorator userDecorator = (UserDecorator) SecurityContextHolder
                     .getContext()
                     .getAuthentication()
@@ -61,13 +65,8 @@ public class ConverterController {
 
         boolean isCurrencyToUpdated = isCurrencyUpdated(currencyTo, dateOfConversion);
 
-
-        System.out.println(isCurrencyFromUpdated + " " + isCurrencyToUpdated);
-
         isCurrencyFromUpdateSucceeded = secondCheckIfCurrencyHaveBeenUpdated(isCurrencyFromUpdated, currencyFrom, dateOfConversion);
         isCurrencyToUpdateSucceeded = secondCheckIfCurrencyHaveBeenUpdated(isCurrencyToUpdated, currencyTo, dateOfConversion);
-
-        System.out.println(isCurrencyFromUpdateSucceeded + " " + isCurrencyToUpdateSucceeded);
 
         Double result = calculateResult(converterDto, currencyFrom, currencyTo);
 
@@ -130,14 +129,5 @@ public class ConverterController {
             }
         }
         return true;
-    }
-    @Autowired
-    public void setService(CurrencyService currencyService) {
-        this.currencyService = currencyService;
-    }
-
-    @Autowired
-    public void setConversionHistoryService(ConversionHistoryService conversionHistoryService) {
-        this.conversionHistoryService = conversionHistoryService;
     }
 }
